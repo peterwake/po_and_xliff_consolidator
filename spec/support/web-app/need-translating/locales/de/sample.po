@@ -1,0 +1,84 @@
+# German translations for app package.
+# Copyright (C) 2016 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the app package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: app 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2016-09-02 13:57+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: German\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"\n"
+
+msgid "Add"
+msgstr "Hinzufügen"
+
+msgid "Add a comment or task…"
+msgstr "Kommentar oder Aufgabe hinzufügen ..."
+
+msgid "Add photos..."
+msgstr "Fotos hinzufügen..."
+
+msgid "MyAppName"
+msgstr "MyAppName"
+
+msgid "Date: %{date}"
+msgstr "Datum: %{date}"
+
+msgid "Deadline"
+msgstr "Deadline"
+
+msgid "Deadline:"
+msgstr "Deadline:"
+
+msgid "EMAIL"
+msgstr "E-MAIL"
+
+msgid "Email"
+msgstr "E-mail"
+
+msgid "If you'd like to change this, %s."
+msgstr "Möchten Sie dies ändern, %s."
+
+msgid "Last update time:"
+msgstr "Letztes update :"
+
+msgid "Manager on Duty: %{manager}"
+msgstr "Diensthabender Manager: %{manager}"
+
+msgid "Name"
+msgstr "Name "
+
+msgid "No active forms"
+msgstr "Keine aktiven Formulare"
+
+msgid "No active forms!"
+msgstr "Keine aktiven formulare!"
+
+msgid "Task group:"
+msgstr "Aufgabengruppe:"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Send email"
+msgstr ""
+
+msgid "Split PDF"
+msgstr ""
+
+msgid "Task"
+msgstr "Aufgabe"
+
+msgid "Today"
+msgstr "Heute"
+
+msgid "Take a photo"
+msgstr "Fotografieren Sie"

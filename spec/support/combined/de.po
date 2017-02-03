@@ -1,0 +1,114 @@
+# German translations for app package.
+# Copyright (C) 2016 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the app package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+# 30 translation units (phrases)
+# 2 untranslated phrases
+# 4 untranslated words
+# 5 duplicates
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: app 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2016-09-02 13:57+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: German\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"\n"
+
+msgid "No active forms"
+msgstr "Keine aktiven Formulare"
+
+msgid "Add photos"
+msgstr "Fotos hinzufügen"
+
+msgid "Take a photo"
+msgstr "Fotografieren Sie"
+
+msgid "%1$@ for %2$@"
+msgstr "%1$@ für %2$@"
+
+msgid "%1$lu %2$@"
+msgstr "%1$lu %2$@"
+
+msgid "%1$lu %2$@ waiting for network connection"
+msgstr "%1$lu %2$@ warten auf Netzwerkverbindung"
+
+msgid "%@ away"
+msgstr "%@ entfernt"
+
+msgid "%ld days to go"
+msgstr "Noch %ld Tage"
+
+msgid "Add"
+msgstr "Hinzufügen"
+
+msgid "Add a comment or task"
+msgstr "Kommentar oder Aufgabe hinzufügen "
+
+msgid "Date: %{date}"
+msgstr "Datum: %{date}"
+
+msgid "Deadline"
+msgstr "Deadline"
+
+msgid "Department"
+msgstr "Abteilung"
+
+msgid "Domain"
+msgstr "Domäne"
+
+msgid "Done."
+msgstr "Erledigt."
+
+msgid "EMAIL"
+msgstr "E-MAIL"
+
+msgid "If you'd like to change this, %s."
+msgstr "Möchten Sie dies ändern, %s."
+
+msgid "Last update time"
+msgstr "Letztes update "
+
+msgid "Manager on Duty: %{manager}"
+msgstr "Diensthabender Manager: %{manager}"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Password"
+msgstr "Passwort"
+
+msgid "Save"
+msgstr "Speichern"
+
+msgid "Send email"
+msgstr ""
+
+msgid "Split PDF"
+msgstr ""
+
+msgid "Task"
+msgstr "Aufgabe"
+
+msgid "Task description"
+msgstr "Aufgabenbeschreibung"
+
+msgid "Task group"
+msgstr "Aufgabengruppe"
+
+msgid "Today"
+msgstr "Heute"
+
+msgid "years"
+msgstr "Jahre"
+
