@@ -1,4 +1,4 @@
-require_relative 'Logging'
+require_relative 'logging'
 
 module PoAndXliffConsolidator
   class TranslateUnit
