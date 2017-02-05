@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/peterwake/po_and_xliff_consolidator.svg?branch=master)](https://travis-ci.org/peterwake/po_and_xliff_consolidator)
+[![Gem Version](https://badge.fury.io/rb/po_and_xliff_consolidator.svg)](https://badge.fury.io/rb/po_and_xliff_consolidator)
+
+
 # Consolidate PO and Xliff Files
 
 Used to manage translation files required by a web app using .po files and an iOS app using .xliff files, consolidating them into one set of files.
