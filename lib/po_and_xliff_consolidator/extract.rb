@@ -80,8 +80,18 @@ module PoAndXliffConsolidator
           msgid = match1[1]
           msgid_line = line
           if line = fp.gets
-            if @msgstr_regex.match(line)
+            if match2 = @msgstr_regex.match(line)
+              old_msgstr = match2[1]
               msgstr = get_msgstr(msgid)
+              if old_msgstr.strip != msgstr.strip
+                if old_msgstr == "" || old_msgstr == msgid
+                  if msgid != msgstr
+                    logger.info "Adding `#{msgid}` as `#{msgstr}`"
+                  end
+                else
+                  logger.info "Revising `#{msgid}` from `#{old_msgstr}` to `#{msgstr}`"
+                end
+              end
               fp2.puts msgid_line
               fp2.puts "msgstr \"#{msgstr}\""
               fp2.puts
@@ -132,16 +142,21 @@ module PoAndXliffConsolidator
               new_node.content = msgstr
               xcode_source_nodes.last.add_next_sibling new_node
               changes += 1
+              if msgid != msgstr
+                logger.info "Adding `#{msgid}` as `#{msgstr}`"
+              end
             else
               logger.info "Not creating #{msgid} because content is blank"
             end
 
           elsif xtc == 1
-            if xcode_targets.text.strip != msgstr.strip
+            old_msgstr = xcode_targets.text
+            if old_msgstr.strip != msgstr.strip
+              logger.info "Revising `#{msgid}` from `#{old_msgstr}` to `#{msgstr}`"
               xcode_targets.last.content = msgstr
               changes += 1
             else
-              logger.debug "No change for #{msgid}"
+              logger.debug "No change for `#{msgid}`"
             end
           else
             throw "I don't know what to do if there are two target nodes"

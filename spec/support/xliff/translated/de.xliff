@@ -23,7 +23,7 @@
       </trans-unit>
       <trans-unit id="3lb-ML-knl.normalTitle">
         <source>Take a photo...</source>
-        <target>Fotografieren sie...</target>
+        <target>Fotografieren Sie...</target>
         <note>Class = "UIButton"; normalTitle = "Take a photo..."; ObjectID = "3lb-ML-knl";</note>
       </trans-unit>
       <trans-unit id="GyI-fe-U8V.title">

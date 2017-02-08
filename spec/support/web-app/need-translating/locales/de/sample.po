@@ -21,7 +21,7 @@ msgid "Add"
 msgstr "Hinzufügen"
 
 msgid "Add a comment or task…"
-msgstr "Kommentar oder Aufgabe hinzufügen ..."
+msgstr "Kommentar oder Aufgabe hinzufügen…"
 
 msgid "Add photos..."
 msgstr "Fotos hinzufügen..."
@@ -48,7 +48,7 @@ msgid "If you'd like to change this, %s."
 msgstr "Möchten Sie dies ändern, %s."
 
 msgid "Last update time:"
-msgstr "Letztes update :"
+msgstr "Letztes update:"
 
 msgid "Manager on Duty: %{manager}"
 msgstr "Diensthabender Manager: %{manager}"
@@ -60,7 +60,7 @@ msgid "No active forms"
 msgstr "Keine aktiven Formulare"
 
 msgid "No active forms!"
-msgstr "Keine aktiven formulare!"
+msgstr "Keine aktiven Formulare!"
 
 msgid "Task group:"
 msgstr "Aufgabengruppe:"

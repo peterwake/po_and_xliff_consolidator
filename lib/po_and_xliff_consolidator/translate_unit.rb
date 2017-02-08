@@ -21,13 +21,9 @@ module PoAndXliffConsolidator
       msgid_downcase <=> a_n_other.msgid_downcase
     end
 
-    def chomp_all(str)
-      str.strip.chomp.chomp(':').chomp('...').chomp('..').chomp('…')
-    end
-
     def initialize(msgid, msgstr)
-      @msgid = chomp_all(msgid)
-      @msgstr = chomp_all(msgstr)
+      @msgid = Transform.intelligent_chomp_string(msgid)
+      @msgstr = Transform.intelligent_chomp_string(msgstr)
       @msgid_downcase = TranslateUnit::msgid_key(msgid)
       @msgid_downcase_singular = @msgid_downcase.chomp('s')
 

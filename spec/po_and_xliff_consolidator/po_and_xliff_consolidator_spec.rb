@@ -52,16 +52,37 @@ describe PoAndXliffConsolidator do
   end
 
   context 'Transforming back' do
-    tu = PoAndXliffConsolidator::TranslateUnit.new('Today','Heute')
+
+    arr = [
+        ['Today','Heute'],
+        ['comments','Kommentare'],
+        ['No active forms!','Keine aktiven Formulare!']
+    ]
+
+    tus = []
+
     e = PoAndXliffConsolidator::Extract.new
-    it 'Should handle exact matches' do
-      expect(e.match_with_ending('Today',tu)).to eq 'Heute'
-    end
-    [':','...',': ',' : ','.','..','...','…',"\n"].each do |extra_text|
-      it "Should add back `#{extra_text}`" do
-        expect(e.match_with_ending('Today' + extra_text,tu)).to eq 'Heute' + extra_text
+
+    arr.each do |msgid, msgstr|
+      tu = PoAndXliffConsolidator::TranslateUnit.new(msgid, msgstr)
+      tus << tu
+
+      it 'Should handle exact matches' do
+        expect(e.match_with_ending(msgid,tu)).to eq msgstr
+      end
+      [':','...',': ',' : ','..','...','…',"\n",'!'].each do |extra_text|
+        it "Should add back `#{extra_text}`" do
+          expect(e.match_with_ending(msgid + extra_text,tu)).to eq msgstr + extra_text
+        end
       end
     end
+
+
+    it 'Should not make capitalised translations (for example German nouns) lower case' do
+      expect(e.match_with_ending('comments',tus[1])).to eq 'Kommentare'
+      expect(e.match_with_ending('No active forms!',tus[2])). to eq 'Keine aktiven Formulare!'
+    end
+
   end
 
   context 'Combining' do
@@ -115,6 +136,8 @@ describe PoAndXliffConsolidator do
 
         reference_combined_file_name = c.combined_file_name
 
+        tmpdir = '/tmp'
+
         c.path_templates[:translated] = {
             po: [tmpdir,'%{app_name}.po'],
             xliff: [tmpdir,'%{language_code}.xliff']
@@ -143,6 +166,8 @@ describe PoAndXliffConsolidator do
 
         reference_combined_po_file_name = c.web_app_filename(:translated)
         reference_combined_xcode_file_name = c.xcode_file_name(:translated)
+
+        tmpdir = '/tmp'
 
         c.path_templates[:translated] = {
             po: [tmpdir,'%{app_name}.po'],

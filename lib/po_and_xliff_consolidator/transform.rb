@@ -13,6 +13,10 @@ module PoAndXliffConsolidator
       msgid_chomped[:beginning] + matched_string(msgid_chomped[:str], tu_msgid_chomped[:str], tu.msgstr) + msgid_chomped[:ending]
     end
 
+    def self.intelligent_chomp_string(str)
+      Transform.intelligent_chomp(str)[:str]
+    end
+
     def self.intelligent_chomp(str)
       beginning = ''
       ending = ''
@@ -27,14 +31,18 @@ module PoAndXliffConsolidator
       @trailing_regexes ||= [
           /[ \t\n]+$/,
           /[!:…]+$/,
-          /\.{1,3}$/,
-          /[ \t\n]+$/
+          /\.{2,5}$/,
       ]
 
-      @trailing_regexes.each do |trailing_regex|
-        if match = trailing_regex.match(str)
-          ending = match[0] + ending
-          str = str.sub(trailing_regex, '')
+      run_loop = true
+      while run_loop do
+        run_loop = false
+        @trailing_regexes.each do |trailing_regex|
+          if match = trailing_regex.match(str)
+            ending = match[0] + ending
+            str = str.sub(trailing_regex, '')
+            run_loop = true
+          end
         end
       end
 
@@ -52,10 +60,12 @@ module PoAndXliffConsolidator
     end
 
     def matched_string(s1, s2, t)
-      if s1 == s2.upcase
+      if s1 == s2
+        t
+      elsif s1 == s2.upcase
         t.upcase
       elsif s1 == s2.downcase
-        t.downcase
+        t
       elsif s1 == s2.capitalize
         t.capitalize
       elsif s1 == s2.split.map(&:capitalize).join(' ')
