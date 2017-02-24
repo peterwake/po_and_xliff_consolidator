@@ -174,6 +174,32 @@ module PoAndXliffConsolidator
 
     end
 
+    def tweak_regexes
+      # Because in (for example) Chinese and Japanese character sets, if we try to match_with_ending,
+      # we can end up with double character blocks like:
+      #
+      # ！!
+      # 。.
+      #
+      # So we just tweak these here...
+
+
+      @tweak_regexes ||= {
+          utf8_and_ascii_colon: [/\uFF1A:/,"\uFF1A".encode('utf-8')],
+          utf8_and_ascii_dotdotdot: [/\u3002\.\.\./,"\u3002".encode('utf-8')],
+          utf8_and_ascii_fullstop: [/\u3002\./,"\u3002".encode('utf-8')],
+          utf8_and_ascii_exclamation: [/\uFF01!/,"\uFF01".encode('utf-8')],
+          utf8_full_stop_and_ascii_exclamation: [/\u3002!/,"\u3002".encode('utf-8')]
+      }
+    end
+
+    def character_set_tweaks(str)
+      tweak_regexes.each do |intent, regex_arr|
+        str.gsub!(regex_arr[0],regex_arr[1])
+      end
+      str
+    end
+
     def get_msgstr(msgid)
       return msgid if should_skip?(msgid)
 
@@ -187,7 +213,7 @@ module PoAndXliffConsolidator
         if msgid == tu.msgid
           return tu.msgstr
         else
-          return match_with_ending(msgid, tu)
+          return character_set_tweaks(match_with_ending(msgid, tu))
         end
       else
         throw "Cannot find `#{msgid}` - looking for `#{key}`"
