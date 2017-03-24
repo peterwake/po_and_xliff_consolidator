@@ -186,7 +186,8 @@ module PoAndXliffConsolidator
 
       @tweak_regexes ||= {
           utf8_and_ascii_colon: [/\uFF1A:/,"\uFF1A".encode('utf-8')],
-          utf8_and_ascii_dotdotdot: [/\u3002\.\.\./,"\u3002".encode('utf-8')],
+          utf8_and_ascii_dotdotdot1: [/\u3002\.\.\./,"\u3002".encode('utf-8')],
+          utf8_and_ascii_dotdotdot2: [/\u3002…/,"\u3002".encode('utf-8')],
           utf8_and_ascii_fullstop: [/\u3002\./,"\u3002".encode('utf-8')],
           utf8_and_ascii_exclamation: [/\uFF01!/,"\uFF01".encode('utf-8')],
           utf8_full_stop_and_ascii_exclamation: [/\u3002!/,"\u3002".encode('utf-8')]
@@ -206,6 +207,11 @@ module PoAndXliffConsolidator
       key = TranslateUnit::msgid_key(msgid)
       tu = @translation_units.find { |tu| tu.msgid_downcase == key }
       if tu
+        if tu.msgstr == ""
+          logger.warn "#{@language_code}: No translation for #{msgid} - msgstr is empty"
+          return ''
+        end
+
         if msgid.include? '%'
           check_string_format_specifiers(msgid, tu.msgstr)
         end

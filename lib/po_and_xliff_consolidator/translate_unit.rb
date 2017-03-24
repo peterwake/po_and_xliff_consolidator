@@ -6,7 +6,7 @@ module PoAndXliffConsolidator
     include Logging
 
     attr_accessor :msgid
-    attr :msgstr
+    attr_accessor :msgstr
     attr :msgid_downcase
     attr :msgid_downcase_singular
     attr :priority
@@ -22,10 +22,8 @@ module PoAndXliffConsolidator
     end
 
     def initialize(msgid, msgstr)
-      @msgid = Transform.intelligent_chomp_string(msgid)
-      @msgstr = Transform.intelligent_chomp_string(msgstr)
-      @msgid_downcase = TranslateUnit::msgid_key(msgid)
-      @msgid_downcase_singular = @msgid_downcase.chomp('s')
+      self.msgid = msgid
+      self.msgstr = msgstr
 
       @@priorities.each_with_index do |string, index|
         if msgid_downcase.include? string
@@ -34,6 +32,16 @@ module PoAndXliffConsolidator
         end
         @priority = @@priorities.count
       end
+    end
+
+    def msgid=(msgid)
+      @msgid = Transform.intelligent_chomp_string(msgid)
+      @msgid_downcase = TranslateUnit::msgid_key(msgid)
+      @msgid_downcase_singular = @msgid_downcase.chomp('s')
+    end
+
+    def msgstr=(msgstr)
+      @msgstr = Transform.intelligent_chomp_string(msgstr)
     end
 
     def self.msgid_key(msgid)

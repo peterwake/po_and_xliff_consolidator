@@ -13,6 +13,8 @@ module PoAndXliffConsolidator
     include FileHandle
     include Logging
 
+    attr_accessor :make_xliffs_blank
+
     def process(language_code)
       set_language_codes(language_code)
       reset_stores
@@ -104,6 +106,9 @@ module PoAndXliffConsolidator
             msgstr = xcode_targets.first.text
           elsif xtc > 1
             throw "I don't know what to do.."
+          end
+          if make_xliffs_blank
+            msgstr = ''
           end
           add_translation_unit(msgid, msgstr)
         end

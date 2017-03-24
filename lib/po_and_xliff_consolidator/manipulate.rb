@@ -8,8 +8,11 @@ module PoAndXliffConsolidator
     attr_accessor :skip_strings
     attr_accessor :skip_regexes
     attr_accessor :reset_identical_msgid_and_msgstr
+    attr_accessor :translation_units
 
     def initialize
+      reset_stores
+
       @skip_strings = []
       @skip_regexes = []
 
@@ -70,8 +73,14 @@ module PoAndXliffConsolidator
       tu = TranslateUnit.new(msgid, msgstr)
 
       if @translation_units.include? tu
-        logger.debug "Already found #{tu}"
-        @duplicate_count += 1
+        tu2 = @translation_units.find(tu).first
+        if tu2.msgstr != ''
+          logger.debug "Already found #{tu}"
+          @duplicate_count += 1
+        else
+          logger.debug "Setting #{tu2} to use #{msgstr}"
+          tu2.msgstr = msgstr
+        end
         return
       end
       @translation_units << tu

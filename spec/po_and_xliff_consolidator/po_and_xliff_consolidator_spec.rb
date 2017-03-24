@@ -86,6 +86,15 @@ describe PoAndXliffConsolidator do
   end
 
   context 'Combining' do
+    it 'should override blank msgstr' do
+      c = PoAndXliffConsolidator::Combine.new
+      c.reset_stores
+      c.add_translation_unit('Password','')
+      c.add_translation_unit('Password','Contraseña')
+      expect(c.translation_units.count).to eq 1
+      expect(c.translation_units[0].msgstr).to eq 'Contraseña'
+    end
+
     it 'should set default paths' do
       c = PoAndXliffConsolidator::Combine.new
       c.root_file_path = support_directory
