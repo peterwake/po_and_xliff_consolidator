@@ -67,8 +67,8 @@ msgstr "Domäne"
 msgid "Done."
 msgstr "Erledigt."
 
-msgid "EMAIL"
-msgstr "E-MAIL"
+msgid "Email"
+msgstr "E-mail"
 
 msgid "If you'd like to change this, %s."
 msgstr "Möchten Sie dies ändern, %s."
