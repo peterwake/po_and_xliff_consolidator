@@ -24,7 +24,16 @@ module PoAndXliffConsolidator
     def initialize(msgid, msgstr)
       self.msgid = msgid
       self.msgstr = msgstr
+    end
 
+    def msgid=(msgid)
+      @msgid = Transform.intelligent_chomp_string(msgid)
+      @msgid_downcase = TranslateUnit::msgid_key(msgid)
+      @msgid_downcase_singular = @msgid_downcase.chomp('s')
+      set_priority
+    end
+
+    def set_priority
       @@priorities.each_with_index do |string, index|
         if msgid_downcase.include? string
           @priority = index
@@ -32,12 +41,6 @@ module PoAndXliffConsolidator
         end
         @priority = @@priorities.count
       end
-    end
-
-    def msgid=(msgid)
-      @msgid = Transform.intelligent_chomp_string(msgid)
-      @msgid_downcase = TranslateUnit::msgid_key(msgid)
-      @msgid_downcase_singular = @msgid_downcase.chomp('s')
     end
 
     def msgstr=(msgstr)

@@ -73,16 +73,28 @@ module PoAndXliffConsolidator
       tu = TranslateUnit.new(msgid, msgstr)
 
       if @translation_units.include? tu
-        tu2 = @translation_units.find(tu).first
-        if tu2.msgstr != ''
+        tu2 = @translation_units.find {|tux| tux == tu}
+
+        if Analyse::quality(tu.msgid) > Analyse::quality(tu2.msgid)
+          logger.debug "Decided msgid `#{tu}` is better quality than `#{tu2}`"
+          tu2.msgid = tu.msgid
+          if tu.msgstr != ''
+            logger.debug "Replacing `#{tu2.msgstr}` with `#{tu.msgstr}`"
+            tu2.msgstr = tu.msgstr
+          end
+        end
+
+        if tu2.msgstr == ''
+          logger.debug "Setting #{tu2} to use #{tu.msgstr}"
+          tu2.msgstr = tu.msgstr
+        else
           logger.debug "Already found #{tu}"
           @duplicate_count += 1
-        else
-          logger.debug "Setting #{tu2} to use #{msgstr}"
-          tu2.msgstr = msgstr
         end
+
         return
       end
+
       @translation_units << tu
       if msgstr == ''
         @untranslated_count += 1
