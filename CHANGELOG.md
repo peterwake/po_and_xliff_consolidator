@@ -1,3 +1,6 @@
+v0.1.6 (2017-04-26)
+-
+* On extraction, add ability to skip logging of messages we know aren't a problem 
 
 v0.1.4 (2017-03-24)
 -

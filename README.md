@@ -19,6 +19,7 @@ This gem will:
  * extract back using the original .po and .xliff file structure, putting the result in a different directory
  * look out for phrases with variables inside them and warn if the token has accidentally been translated by the translator (like %{count} or %count% or %@)
  * skips phrases you don't want translated - sometimes Xcode extracts phrases automatically that you just don't want translating 
+ * on extraction, can skip warning messages where you have previously identified the message is OK (e.g. where the translation is identical in both languages)
  
 ## Setup
  
@@ -127,8 +128,17 @@ c.root_file_path = __dir__
 c.app_name = 'myapp' # whatever your .po files are called
 c.skip_strings=['','*', '$(PRODUCT_NAME)', 'PPT','PDF']
 c.skip_regexes = [/^\d+$/,/^\d+\.\d+$/,/^\d+\.\d+\.\d+$/] # 1, 1.1, 1.1.1
-#c.reset_identical_msgid_and_msgstr = true
-#c.logger.level = Logger::WARN
+#
+# c.reset_identical_msgid_and_msgstr = true
+#
+# c.logger.level = Logger::WARN
+# c.logger.formatter = proc do |severity, datetime, progname, msg|
+#  "#{severity}: #{msg}\n"
+# end
+#
+# messages_to_skip = YAML.load_file('messages_to_skip.yml')
+# c.logger.skip(messages_to_skip)
+#
 
 languages = [
     'de', 'es', ['zh_CN', 'zh-Hans']
@@ -137,6 +147,8 @@ languages = [
 languages.each do |lang|
   c.process(lang)
 end
+#
+# puts c.logger.messages.to_yaml
 ```
  
  * On command line under the `myapp-i18n` folder, run the `extract` program
