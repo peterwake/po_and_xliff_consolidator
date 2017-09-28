@@ -18,13 +18,18 @@ module PoAndXliffConsolidator
               po: ['%{root_file_path}','web-app','translated','locales','%{language_code}','%{app_name}.po'],
               xliff: ['%{root_file_path}','xliff','translated','%{xliff_language_code}.xliff'],
           },
-          combined: ['%{root_file_path}','combined','%{language_code}.po']
+          combined: ['%{root_file_path}','combined','%{language_code}.po'],
+          dictionary: ['%{root_file_path}','dictionary','%{language_code}.po']
       }
       super
     end
 
     def get_path(path_array)
       File.join(path_array.map{|p| p.gsub('%{root_file_path}',@root_file_path).gsub('%{language_code}',@language_code).gsub('%{xliff_language_code}',@xliff_language_code).gsub('%{app_name}',@app_name)})
+    end
+
+    def dictionary_file_name
+      get_path(path_templates[:dictionary])
     end
 
     def combined_file_name

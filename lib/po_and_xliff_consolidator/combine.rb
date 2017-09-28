@@ -18,6 +18,7 @@ module PoAndXliffConsolidator
     def process(language_code)
       set_language_codes(language_code)
       reset_stores
+      process_dictionary_file
       process_web_app
       process_xliff
       write_output_file
@@ -59,6 +60,49 @@ module PoAndXliffConsolidator
       fp.close
     end
 
+
+    def process_dictionary_file
+      fp = File.open(dictionary_file_name, 'r')
+
+      while (line = fp.gets)
+        break if line.strip == ''
+      end
+
+      while (line = fp.gets)
+        if match1 = @msgid_regex.match(line)
+          msgid = match1[1]
+          if line = fp.gets
+            while match1c = @continuation_regex.match(line)
+              msgid += match1c[1]
+              line = fp.gets
+            end
+            if match2 = @msgstr_regex.match(line)
+              msgstr = match2[1]
+              if line = fp.gets
+                while match2c = @continuation_regex.match(line)
+                  msgstr += match2c[1]
+                  line = fp.gets
+                end
+              end
+              add_translation_unit(msgid, msgstr)
+            elsif match2 = @msgid_plural_regex.match(line)
+              block = [match1[0], match2[0]]
+              line = fp.gets
+              while line && line.strip != ''
+                block << line
+                line = fp.gets
+              end
+              @unsolved_blocks << block
+            else
+              throw "I don't know what to do.."
+            end
+          end
+
+        end
+      end
+      fp.close
+    end
+
     def process_web_app
       fp = web_app_file_pointer(:need_translating,'r')
 
@@ -83,6 +127,7 @@ module PoAndXliffConsolidator
               end
               @unsolved_blocks << block
             else
+              puts line
               throw "I don't know what to do.."
             end
           end
