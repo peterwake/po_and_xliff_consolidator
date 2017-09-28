@@ -56,7 +56,7 @@ module PoAndXliffConsolidator
     end
 
     def chomped(string)
-      string.chomp(':').chomp('!').chomp('...').chomp('..').chomp('…').strip
+      string.chomp(':').chomp('!').chomp('...').chomp('..').chomp('…').chomp('.').strip
     end
 
     def matched_string(s1, s2, t)

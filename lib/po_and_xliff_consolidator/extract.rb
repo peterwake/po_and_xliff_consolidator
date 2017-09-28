@@ -19,8 +19,9 @@ module PoAndXliffConsolidator
       set_language_codes(language_code)
       reset_stores
       process_combined_file
-      update_po_file
-      update_xliff_file
+      # update_po_file
+      # update_xliff_file
+      create_xamarin_file
     end
 
     def process_combined_file
@@ -64,6 +65,10 @@ module PoAndXliffConsolidator
         end
       end
       fp.close
+    end
+
+    def xamarin_base_doc
+      @xamarin_base_doc ||= get_xamarin_base_doc
     end
 
     def update_po_file
@@ -117,6 +122,22 @@ module PoAndXliffConsolidator
 
       fp.close
       fp2.close
+
+    end
+
+
+    def create_xamarin_file
+      xamarin_doc = get_xamarin_base_doc
+
+      xamarin_doc.xpath('//data').each do |xamarin_data_node|
+        value_node = xamarin_data_node.xpath('value').first
+        msgid = value_node.text
+        msgstr = get_msgstr(msgid)
+        value_node.content = msgstr
+      end
+
+      doc_string = xamarin_doc.to_s
+      File.write(xamarin_file_name(:translated), doc_string)
 
     end
 
@@ -206,6 +227,7 @@ module PoAndXliffConsolidator
 
       key = TranslateUnit::msgid_key(msgid)
       tu = @translation_units.find { |tu| tu.msgid_downcase == key }
+
       if tu
         if tu.msgstr == ""
           logger.warn "#{@language_code}: No translation for #{msgid} - msgstr is empty"
@@ -222,6 +244,14 @@ module PoAndXliffConsolidator
           return character_set_tweaks(match_with_ending(msgid, tu))
         end
       else
+        if msgid.include? '{0}'
+          tu = @translation_units.find { |tu| tu.msgid_xamarin == key }
+          if tu
+            msgstr = TranslateUnit::xamarin_equivalent(tu.msgstr)
+            return msgstr
+          end
+        end
+
         throw "Cannot find `#{msgid}` - looking for `#{key}`"
         return msgid
       end
@@ -232,7 +262,7 @@ module PoAndXliffConsolidator
       @extract_regexes ||= {
           fastgettext_regex: /%\{[a-zA-Z0-9_]+\}/,
           xyz_regex: /%[a-zA-Z0-9_]+%/,
-          xcode_regex: /(%)([\d]+[$]+)*(h|hh|l|ll|q|L|z|t|j)*(\$)*(.02f)*(@|%|d|D|u|U|x|X|o|O|f|e|E|g|G|c|C|s|S|p|a|A|F)/,
+          xcode_regex: /(%)([\d]+[$]+)*(h|hh|l|ll|q|L|z|t|j)*(\$)*(.02)*(@|d|D|u|U|x|X|o|O|f|e|E|g|G|c|C|s|S|p|a|A|F)/,
           n_percent_regex: /\d+%/
       }
     end

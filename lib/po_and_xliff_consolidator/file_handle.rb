@@ -12,11 +12,16 @@ module PoAndXliffConsolidator
       @path_templates = {
           need_translating: {
               po: ['%{root_file_path}','web-app','need-translating','locales','%{language_code}','%{app_name}.po'],
-              xliff: ['%{root_file_path}','xliff','need-translating','%{xliff_language_code}.xliff']
+              xliff: ['%{root_file_path}','xliff','need-translating','%{xliff_language_code}.xliff'],
+              xamarin: ['%{root_file_path}','xamarin','need-translating','LocalizationResources.%{language_code}.resx']
           },
           translated: {
               po: ['%{root_file_path}','web-app','translated','locales','%{language_code}','%{app_name}.po'],
               xliff: ['%{root_file_path}','xliff','translated','%{xliff_language_code}.xliff'],
+              xamarin: ['%{root_file_path}','xamarin','translated','LocalizationResources.%{language_code}.resx']
+          },
+          base: {
+              xamarin: ['%{root_file_path}','xamarin','need-translating','LocalizationResources.resx']
           },
           combined: ['%{root_file_path}','combined','%{language_code}.po'],
           dictionary: ['%{root_file_path}','dictionary','%{language_code}.po']
@@ -44,6 +49,10 @@ module PoAndXliffConsolidator
       get_path(path_templates[subfolder][:xliff])
     end
 
+    def xamarin_file_name(subfolder)
+      get_path(path_templates[subfolder][:xamarin])
+    end
+
     def web_app_file_pointer(subfolder, mode)
       fn = web_app_filename(subfolder)
       logger.debug "Opening #{fn}"
@@ -52,6 +61,18 @@ module PoAndXliffConsolidator
 
     def xcode_doc(subfolder)
       fn = xcode_file_name(subfolder)
+      logger.debug "Opening #{fn}"
+      Nokogiri.XML(File.open(fn))
+    end
+
+    def xamarin_doc(subfolder)
+      fn = xamarin_file_name(subfolder)
+      logger.debug "Opening #{fn}"
+      Nokogiri.XML(File.open(fn))
+    end
+
+    def get_xamarin_base_doc
+      fn = get_path(path_templates[:base][:xamarin])
       logger.debug "Opening #{fn}"
       Nokogiri.XML(File.open(fn))
     end

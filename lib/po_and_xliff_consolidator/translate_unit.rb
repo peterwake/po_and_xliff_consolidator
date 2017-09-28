@@ -9,6 +9,7 @@ module PoAndXliffConsolidator
     attr_accessor :msgstr
     attr :msgid_downcase
     attr :msgid_downcase_singular
+    attr :msgid_xamarin
     attr :priority
 
     @@priorities = []
@@ -30,6 +31,7 @@ module PoAndXliffConsolidator
       @msgid = Transform.intelligent_chomp_string(msgid)
       @msgid_downcase = TranslateUnit::msgid_key(msgid)
       @msgid_downcase_singular = @msgid_downcase.chomp('s')
+      @msgid_xamarin = self.class.xamarin_equivalent(@msgid_downcase)
       set_priority
     end
 
@@ -45,6 +47,22 @@ module PoAndXliffConsolidator
 
     def msgstr=(msgstr)
       @msgstr = Transform.intelligent_chomp_string(msgstr)
+    end
+
+    def self.xcode_regex
+      @xcode_regex ||= /(%)([\d]+[$]+)*(h|hh|l|ll|q|L|z|t|j)*(\$)*(.02)*(@|d|D|u|U|x|X|o|O|f|e|E|g|G|c|C|s|S|p|a|A|F)/
+    end
+
+    def self.xamarin_equivalent(str)
+      str_temp = str.dup
+      results = str_temp.scan(self.xcode_regex)
+      index = 0
+      results.each do |result|
+        result = result.join('')
+        str_temp.sub!(result, "{#{index}}")
+        index += 1
+      end
+      return str_temp
     end
 
     def self.msgid_key(msgid)
