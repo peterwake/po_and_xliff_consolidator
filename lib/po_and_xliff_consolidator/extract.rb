@@ -132,7 +132,12 @@ module PoAndXliffConsolidator
       xamarin_doc.xpath('//data').each do |xamarin_data_node|
         value_node = xamarin_data_node.xpath('value').first
         msgid = value_node.text
-        msgstr = get_msgstr(msgid)
+        begin
+          msgstr = get_msgstr(msgid)
+        rescue
+          logger.warn "Couldn't find Xamarin text `#{msgid}` - using `#{msgid}`"
+          msgstr = msgid
+        end
         value_node.content = msgstr
       end
 

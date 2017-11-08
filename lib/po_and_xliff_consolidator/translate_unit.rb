@@ -53,12 +53,22 @@ module PoAndXliffConsolidator
       @xcode_regex ||= /(%)([\d]+[$]+)*(h|hh|l|ll|q|L|z|t|j)*(\$)*(.02)*(@|d|D|u|U|x|X|o|O|f|e|E|g|G|c|C|s|S|p|a|A|F)/
     end
 
+    def self.fastgettext_regex
+        @fastgettext_regex ||= /%\{[a-zA-Z0-9_]+\}/
+    end
+
     def self.xamarin_equivalent(str)
       str_temp = str.dup
       results = str_temp.scan(self.xcode_regex)
       index = 0
       results.each do |result|
         result = result.join('')
+        str_temp.sub!(result, "{#{index}}")
+        index += 1
+      end
+      results = str_temp.scan(self.fastgettext_regex)
+      index = 0
+      results.each do |result|
         str_temp.sub!(result, "{#{index}}")
         index += 1
       end
