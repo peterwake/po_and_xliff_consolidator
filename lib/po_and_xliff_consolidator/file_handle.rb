@@ -24,7 +24,8 @@ module PoAndXliffConsolidator
               xamarin: ['%{root_file_path}','xamarin','need-translating','LocalizationResources.resx']
           },
           combined: ['%{root_file_path}','combined','%{language_code}.po'],
-          dictionary: ['%{root_file_path}','dictionary','%{language_code}.po']
+          dictionary: ['%{root_file_path}','dictionary','%{language_code}.po'],
+          csv: ['%{root_file_path}','csv','%{language_code}.csv']
       }
       super
     end
@@ -35,6 +36,10 @@ module PoAndXliffConsolidator
 
     def dictionary_file_name
       get_path(path_templates[:dictionary])
+    end
+
+    def csv_file_name
+      get_path(path_templates[:csv])
     end
 
     def combined_file_name

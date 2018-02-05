@@ -5,6 +5,7 @@ require_relative 'logging'
 
 require 'nokogiri'
 require 'words_counted'
+require 'csv'
 
 module PoAndXliffConsolidator
   class Combine
@@ -22,6 +23,7 @@ module PoAndXliffConsolidator
       process_web_app
       process_xliff
       write_output_file
+      write_csv_file
       logger.info "#{@translation_units.count} translation units"
       logger.info "#{@untranslated_count} untranslated phrases"
       logger.info "#{@untranslated_word_count} untranslated words"
@@ -60,6 +62,14 @@ module PoAndXliffConsolidator
       fp.close
     end
 
+    def write_csv_file
+      @translation_units.sort!
+      CSV.open(csv_file_name, "wb") do |csv|
+        @translation_units.each do |tu|
+          csv << [tu.msgid, tu.msgstr]
+        end
+      end
+    end
 
     def process_dictionary_file
       fp = File.open(dictionary_file_name, 'r')

@@ -16,12 +16,14 @@ module PoAndXliffConsolidator
     include Logging
 
     def process(language_code)
+      logger.info "Processing #{language_code}"
       set_language_codes(language_code)
       reset_stores
       process_combined_file
-      # update_po_file
+      update_po_file
+      write_csv_file
       # update_xliff_file
-      create_xamarin_file
+      # create_xamarin_file
     end
 
     def process_combined_file
@@ -39,6 +41,9 @@ module PoAndXliffConsolidator
             while match1c = @continuation_regex.match(line)
               msgid += match1c[1]
               line = fp.gets
+            end
+            if msgid.include? 'Congratulations'
+              puts 'hi'
             end
             if match2 = @msgstr_regex.match(line)
               msgstr = match2[1]
@@ -85,6 +90,10 @@ module PoAndXliffConsolidator
           msgid = match1[1]
           msgid_line = line
           if line = fp.gets
+            while match1c = @continuation_regex.match(line)
+              msgid += match1c[1]
+              line = fp.gets
+            end
             if match2 = @msgstr_regex.match(line)
               old_msgstr = match2[1]
               msgstr = get_msgstr(msgid)
@@ -257,8 +266,8 @@ module PoAndXliffConsolidator
           end
         end
 
-        throw "Cannot find `#{msgid}` - looking for `#{key}`"
-        return msgid
+        logger.warn "Cannot find `#{msgid}` - looking for `#{key}`"
+        return ""
       end
 
     end
@@ -294,7 +303,7 @@ module PoAndXliffConsolidator
               logs.each do |log|
                 logger.debug log
               end
-              throw "Cannot find #{result}"
+              throw "Cannot find #{result} for #{@language_code}"
             end
           end
         end
