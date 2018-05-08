@@ -21,8 +21,8 @@ module PoAndXliffConsolidator
       reset_stores
       process_combined_file
       update_po_file
-      write_csv_file
-      # update_xliff_file
+      # write_csv_file
+      update_xliff_file
       # create_xamarin_file
     end
 
@@ -42,9 +42,9 @@ module PoAndXliffConsolidator
               msgid += match1c[1]
               line = fp.gets
             end
-            if msgid.include? 'Congratulations'
-              puts 'hi'
-            end
+            #if msgid.include? 'Congratulations'
+            #  puts 'hi'
+            #end
             if match2 = @msgstr_regex.match(line)
               msgstr = match2[1]
               if line = fp.gets
@@ -190,6 +190,10 @@ module PoAndXliffConsolidator
               logger.info "Revising `#{msgid}` from `#{old_msgstr}` to `#{msgstr}`"
               xcode_targets.last.content = msgstr
               changes += 1
+            elsif old_msgstr != msgstr
+              logger.info "Revising spacing for `#{msgid}` from `#{old_msgstr}` to `#{msgstr}`"
+              xcode_targets.last.content = msgstr
+              changes += 1
             else
               logger.debug "No change for `#{msgid}`"
             end
@@ -264,6 +268,14 @@ module PoAndXliffConsolidator
             msgstr = TranslateUnit::xamarin_equivalent(tu.msgstr)
             return msgstr
           end
+        end
+
+        if msgid == 'Y'
+          return 'Y'
+        end
+
+        if msgid == 'N'
+          return 'N'
         end
 
         logger.warn "Cannot find `#{msgid}` - looking for `#{key}`"
