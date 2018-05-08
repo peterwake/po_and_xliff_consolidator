@@ -1,5 +1,6 @@
 require './lib/po_and_xliff_consolidator'
 require 'fileutils'
+require 'tmpdir'
 
 support_directory = File.join('spec','support')
 PoAndXliffConsolidator::TranslateUnit.class_variable_set(:@@priorities,['form','photo'])
