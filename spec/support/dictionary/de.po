@@ -1,0 +1,34 @@
+# German translations for app package.
+# Copyright (C) 2016 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the app package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+# 30 translation units (phrases)
+# 2 untranslated phrases
+# 4 untranslated words
+# 5 duplicates
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-11-09 08:56+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Translate Toolkit 2.0.0b7\n"
+"X-Pootle-Path: /de/storiq2/de.po\n"
+"X-Pootle-Revision: 12814\n"
+
+
+msgid "No active forms"
+msgstr "Keine aktiven Formulare"
+
+msgid "Add photos"
+msgstr "Fotos hinzufügen"
+
+

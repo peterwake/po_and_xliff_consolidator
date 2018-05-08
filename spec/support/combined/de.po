@@ -6,7 +6,7 @@
 # 30 translation units (phrases)
 # 2 untranslated phrases
 # 4 untranslated words
-# 5 duplicates
+# 7 duplicates
 #
 msgid ""
 msgstr ""
