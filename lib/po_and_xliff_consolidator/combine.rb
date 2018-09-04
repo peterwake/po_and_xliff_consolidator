@@ -19,7 +19,6 @@ module PoAndXliffConsolidator
     def process(language_code)
       set_language_codes(language_code)
       reset_stores
-      process_dictionary_file
       process_web_app
       process_xliff
       write_output_file

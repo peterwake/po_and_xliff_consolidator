@@ -21,7 +21,6 @@ module PoAndXliffConsolidator
       reset_stores
       process_combined_file
       update_po_file
-      # write_csv_file
       update_xliff_file
       # create_xamarin_file
     end
@@ -132,6 +131,10 @@ module PoAndXliffConsolidator
       fp.close
       fp2.close
 
+    end
+
+    def update_dictionary_file
+      FileUtils.copy(combined_file_name, dictionary_file_name)
     end
 
 
