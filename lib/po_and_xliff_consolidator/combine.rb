@@ -21,6 +21,7 @@ module PoAndXliffConsolidator
       reset_stores
       process_web_app
       process_xliff
+      process_dictionary_file
       write_output_file
       write_csv_file
       logger.info "#{@translation_units.count} translation units"

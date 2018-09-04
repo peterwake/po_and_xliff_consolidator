@@ -21,6 +21,7 @@ module PoAndXliffConsolidator
       reset_stores
       process_combined_file
       update_po_file
+      update_dictionary_file
       update_xliff_file
       # create_xamarin_file
     end
